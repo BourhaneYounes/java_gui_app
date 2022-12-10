@@ -122,7 +122,7 @@ public class Window {
         formField("Prénom", 5, 92, 85, 15, registrationPanel);
         formField("Age", 5, 132, 50, 15, registrationPanel);
         formField("CNE", 5, 172, 50, 15, registrationPanel);
-        formField("Classe", 5, 212, 70, 15, registrationPanel);
+        formField("Email", 5, 212, 70, 15, registrationPanel);
         formField("Filière", 5, 252, 75, 15, registrationPanel);
         formField("Tél", 5, 292, 50, 15, registrationPanel);
         formField("Ville", 5, 332, 70, 15, registrationPanel);
