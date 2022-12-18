@@ -216,6 +216,17 @@ public class Window {
 		reset.setFocusable(false);
 		reset.setBounds(230,5,110,30);
 		
+		reset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < fields.size(); i++) {
+					fields.get(i).setText("");
+				}
+				
+			}
+		});
+		
 		JButton update = new JButton("Update");
 		update.setFocusable(false);
 		update.setBounds(100,50,110,30);
