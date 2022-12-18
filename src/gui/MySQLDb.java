@@ -14,7 +14,7 @@ public class MySQLDb {
 	private Statement statement = null;
 	private ResultSet resultSet = null;
 	
-	public List<List<String>> readDb(String att) throws Exception{
+	public String[][] readDb(String att) throws Exception{
 		
 		List<List<String>> data = new ArrayList<List<String>>();
 		
@@ -41,7 +41,6 @@ public class MySQLDb {
 			while(resultSet.next()) {
 				data.add(new ArrayList<String>());
 				for (int j = 0; j < 7; j++) {
-					System.out.println(resultSet.getString(j+1));
 					data.get(i).add(resultSet.getString(j+1));
 				}
 				i++;
@@ -50,10 +49,20 @@ public class MySQLDb {
 			conn.close();
 			
 					
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println(e);
 		}
-	return data;	
+		
+	String[][] dataFormated = new String[data.size()][7];
+	
+	for (int i = 0; i < data.size(); i++) {
+		for (int j = 0; j < 7; j++) {
+			dataFormated[i][j] = data.get(i).get(j);
+		}
+	}
+	
+	return dataFormated;	
 	}
 	
 }
