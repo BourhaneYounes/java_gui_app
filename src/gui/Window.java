@@ -227,17 +227,17 @@ public class Window {
 			}
 		});
 		
-		JButton update = new JButton("Update");
-		update.setFocusable(false);
-		update.setBounds(100,50,110,30);
+		JTextField deleteField = new JTextField();
+		deleteField.setText("par nom");
+		deleteField.setBounds(10,55,200,20);
 		
 		JButton delete = new JButton("Supprimer");
 		delete.setFocusable(false);
 		delete.setBounds(230,50,110,30);
 		
+		buttonPanelRegistration.add(deleteField);
 		buttonPanelRegistration.add(valider);
 		buttonPanelRegistration.add(reset);
-		buttonPanelRegistration.add(update);
 		buttonPanelRegistration.add(delete);
 		
 	}
