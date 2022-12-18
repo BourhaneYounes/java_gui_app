@@ -17,13 +17,8 @@ public class MySQLDb {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			this.conn = DriverManager.getConnection(  
-					"jdbc:mysql://localhost:3306/java_mini_projet","root","calimero");
-			
-			//conn = DriverManager.getConnection(
-			//	"jdbc:mysql://" + System.getenv("JHOSTNAME")
-				//+ "/feedback?" + "user=" + System.getenv("JUSER")
-				//+ "&password=" + System.getenv("JPASSWORD"));
+			this.conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/java_mini_projet",System.getenv("JUSER"),System.getenv("JPASSWORD"));
 			
 			
 		}catch (Exception e) {

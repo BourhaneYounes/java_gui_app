@@ -117,7 +117,7 @@ public class Window {
 		JPanel searchBoxPanel = new JPanel();
 		searchBoxPanel.setLayout(null);
 		searchBoxPanel.setBounds(420,80,570,450);
-		searchBoxPanel.setBackground(Color.white);
+		//searchBoxPanel.setBackground(Color.white);
 		
 		
 		JButton refreshButton = new JButton("Actualiser");
@@ -168,7 +168,7 @@ public class Window {
 		JPanel registrationPanel = new JPanel();
         registrationPanel.setLayout(null);
         registrationPanel.setBounds(10,80,400,350);
-        registrationPanel.setBackground(Color.white);
+        //registrationPanel.setBackground(Color.white);
         this.panel.add(registrationPanel);
         
         JLabel registrationLabel = new JLabel();
@@ -242,6 +242,7 @@ public class Window {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					databaseDb.deletedB(deleteField.getText());
+					deleteField.setText("");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -280,10 +281,10 @@ public class Window {
 		for (int i = 0; i < 7; i++) {
 			if (!fieldComponent.contains(fields.get(i).getText()))
 				data[i] = fields.get(i).getText();
-			System.out.println(data[i]);
 		}
 		return data;
 	}
+	
 	public void show() {
 		this.frame.setVisible(true);
 	}
