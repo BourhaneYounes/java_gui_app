@@ -57,6 +57,25 @@ public class MySQLDb {
 		}
 		
 	}
+	
+	public void deletedB(String nom) throws SQLException {
+		getConn();
+		String query = "DELETE FROM Students WHERE nom = '" + nom + "'";
+		
+		try {
+	
+			statement = this.conn.createStatement();
+			statement.execute(query);
+			this.conn.close();
+			
+		} catch (Exception e) {
+			System.err.println("Exception");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		
+	}
+	
 	public String[][] readDb(String att) throws Exception{
 		getConn();
 		List<List<String>> data = new ArrayList<List<String>>();
