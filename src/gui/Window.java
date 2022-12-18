@@ -18,6 +18,7 @@ public class Window {
 	
 	private JFrame frame;
 	private JPanel panel;
+	private JScrollPane scpanel;
 	private MySQLDb databaseDb = new MySQLDb();
 	private ArrayList<JTextField> fields = new ArrayList<>();
 	private ArrayList<String> fieldComponent = new ArrayList<>(List.of("CNE","Nom","Prénom","Email","Filière","Tél","Ville"));
@@ -91,6 +92,19 @@ public class Window {
 		searchButton.setBounds(930,30,65,33);
 		searchButton.setFocusable(false);
 		
+		searchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					createResearchTable(searchField.getText(),scpanel);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
 		searchPanel.add(searchButton);
 		searchPanel.add(searchField);
 		searchPanel.add(searchLabel);
@@ -111,6 +125,7 @@ public class Window {
 		refreshButton.setFocusable(false);
 		JScrollPane scrollPanel = new JScrollPane();
 		scrollPanel.setBounds(15,15,545,395);
+		scpanel = scrollPanel;
 		//scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		refreshButton.addActionListener(new ActionListener() {
@@ -118,7 +133,7 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					createResearchTable(scrollPanel);
+					createResearchTable("",scrollPanel);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -133,11 +148,11 @@ public class Window {
 		
 	}
 	
-	private void createResearchTable(JScrollPane panel) throws Exception {
+	private void createResearchTable(String name, JScrollPane panel) throws Exception {
 		
 		String[] columnNames = {"CNE","NOM", "PRENOM", "EMAIL", "FILIERE", "TEL", "VILLE"};
 		
-		DefaultTableModel tableModel = new DefaultTableModel(databaseDb.readDb(""), columnNames) {
+		DefaultTableModel tableModel = new DefaultTableModel(databaseDb.readDb(name), columnNames) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
