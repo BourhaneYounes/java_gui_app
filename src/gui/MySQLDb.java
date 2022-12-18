@@ -58,9 +58,9 @@ public class MySQLDb {
 		
 	}
 	
-	public void deletedB(String nom) throws SQLException {
+	public void deletedB(String cne) throws SQLException {
 		getConn();
-		String query = "DELETE FROM Students WHERE nom = '" + nom + "'";
+		String query = "DELETE FROM Students WHERE cne = '" + cne + "'";
 		
 		try {
 	

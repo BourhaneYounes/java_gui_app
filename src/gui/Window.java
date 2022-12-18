@@ -228,12 +228,25 @@ public class Window {
 		});
 		
 		JTextField deleteField = new JTextField();
-		deleteField.setText("par nom");
+		deleteField.setText("par cne");
 		deleteField.setBounds(10,55,200,20);
 		
 		JButton delete = new JButton("Supprimer");
 		delete.setFocusable(false);
 		delete.setBounds(230,50,110,30);
+		deleteField.addFocusListener(new FieldFocusListener("par cne", deleteField));
+		
+		delete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseDb.deletedB(deleteField.getText());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		buttonPanelRegistration.add(deleteField);
 		buttonPanelRegistration.add(valider);
