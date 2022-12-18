@@ -1,5 +1,5 @@
 # java_gui_app
-## school mini project
+## managment of students informations
 - simple managment system gui, that adds, deletes, and looks for your informations in a database.
 Set environment variable to match your database server (hostname, password, port, user) for connection.
 Launch from your terminal to go through the same process and get those variables.
