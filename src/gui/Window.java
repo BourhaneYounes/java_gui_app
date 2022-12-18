@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +19,8 @@ public class Window {
 	private JFrame frame;
 	private JPanel panel;
 	private MySQLDb databaseDb = new MySQLDb();
+	private ArrayList<JTextField> fields = new ArrayList<>();
+	private ArrayList<String> fieldComponent = new ArrayList<>(List.of("CNE","Nom","Prénom","Email","Filière","Tél","Ville"));
 	//private boolean activate;
 	
 	public Window() throws Exception {
@@ -90,7 +96,7 @@ public class Window {
 		searchPanel.add(searchLabel);
 		this.panel.add(searchPanel);
 		
-	}
+	}	
 	
 	private void createSearchBox() throws Exception {
 		
@@ -105,7 +111,7 @@ public class Window {
 		refreshButton.setFocusable(false);
 		JScrollPane scrollPanel = new JScrollPane();
 		scrollPanel.setBounds(15,15,545,395);
-		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		refreshButton.addActionListener(new ActionListener() {
 			
@@ -129,7 +135,7 @@ public class Window {
 	
 	private void createResearchTable(JScrollPane panel) throws Exception {
 		
-		String[] columnNames = {"ID", "NOM", "PRENOM", "EMAIL", "FILIERE", "TEL", "VILLE"};
+		String[] columnNames = {"CNE","NOM", "PRENOM", "EMAIL", "FILIERE", "TEL", "VILLE"};
 		
 		DefaultTableModel tableModel = new DefaultTableModel(databaseDb.readDb(""), columnNames) {
 			@Override
@@ -146,7 +152,7 @@ public class Window {
 	private void createRegistrationPanel() {
 		JPanel registrationPanel = new JPanel();
         registrationPanel.setLayout(null);
-        registrationPanel.setBounds(10,80,400,370);
+        registrationPanel.setBounds(10,80,400,350);
         registrationPanel.setBackground(Color.white);
         this.panel.add(registrationPanel);
         
@@ -158,26 +164,38 @@ public class Window {
         
         // composants formulaire
         
-        formField("Nom", 5, 52, 75, 15, registrationPanel);
-        formField("Prénom", 5, 92, 85, 15, registrationPanel);
-        formField("Age", 5, 132, 50, 15, registrationPanel);
-        formField("CNE", 5, 172, 50, 15, registrationPanel);
-        formField("Email", 5, 212, 70, 15, registrationPanel);
-        formField("Filière", 5, 252, 75, 15, registrationPanel);
-        formField("Tél", 5, 292, 50, 15, registrationPanel);
-        formField("Ville", 5, 332, 70, 15, registrationPanel);
+        formField("CNE", 5, 52, 75, 15, registrationPanel);
+        formField("Nom", 5, 92, 70, 15, registrationPanel);
+        formField("Prénom", 5, 132, 85, 15, registrationPanel);
+        formField("Email", 5, 172, 75, 15, registrationPanel);
+        formField("Filière", 5, 212, 85, 15, registrationPanel);
+        formField("Tél", 5, 252, 70, 15, registrationPanel);
+        formField("Ville", 5, 292, 50, 15, registrationPanel);
 	}
 	
 	private void createButtonRegistration() {
 		JPanel buttonPanelRegistration = new JPanel();
 		buttonPanelRegistration.setLayout(null);
-		buttonPanelRegistration.setBounds(10,450,400,100);
+		buttonPanelRegistration.setBounds(10,440,400,100);
 		//buttonPanelRegistration.setBackground(Color.white);
 		this.panel.add(buttonPanelRegistration);
 		
 		JButton valider = new JButton("Valider");
 		valider.setFocusable(false);
 		valider.setBounds(100,5,110,30);
+		
+		valider.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseDb.insertDb(getField());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
 		JButton reset = new JButton("Reset");
 		reset.setFocusable(false);
@@ -211,12 +229,22 @@ public class Window {
         textField.addFocusListener(new FieldFocusListener(name, textField));
         //textField.setBackground(Color.white);
         //textField.addMouseListener(new FieldMouseListener(activate,textField));
+        fields.add(textField);
         
         panel.add(labelField);
         panel.add(textField);
         
 	}
 	
+	private String[] getField() {
+		String[] data = new String[7];
+		for (int i = 0; i < 7; i++) {
+			if (!fieldComponent.contains(fields.get(i).getText()))
+				data[i] = fields.get(i).getText();
+			System.out.println(data[i]);
+		}
+		return data;
+	}
 	public void show() {
 		this.frame.setVisible(true);
 	}
