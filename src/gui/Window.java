@@ -1,22 +1,30 @@
 package gui;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+
 
 
 public class Window {
 	
 	private JFrame frame;
 	private JPanel panel;
+	private MySQLDb databaseDb = new MySQLDb();
 	//private boolean activate;
 	
-	public Window() throws IOException {
+	public Window() throws Exception {
 		
 		init();
 	}
 	
-	private void init() throws IOException {
+	private void init() throws Exception {
+		
+		 
 		
 		// composant principal fenêtre 
 		frame = new JFrame();
@@ -84,23 +92,55 @@ public class Window {
 		
 	}
 	
-	private void createSearchBox() {
+	private void createSearchBox() throws Exception {
 		
 		JPanel searchBoxPanel = new JPanel();
 		searchBoxPanel.setLayout(null);
 		searchBoxPanel.setBounds(420,80,570,450);
 		searchBoxPanel.setBackground(Color.white);
 		
-		JTable searchTable = new JTable();
 		
 		JButton refreshButton = new JButton("Actualiser");
-		refreshButton.setBounds(233,380,105,33);
+		refreshButton.setBounds(233,415,105,33);
 		refreshButton.setFocusable(false);
+		JScrollPane scrollPanel = new JScrollPane();
+		scrollPanel.setBounds(15,15,545,395);
+		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		refreshButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					createResearchTable(scrollPanel);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
 		
 		searchBoxPanel.add(refreshButton);
-		
+		searchBoxPanel.add(scrollPanel);
 		this.panel.add(searchBoxPanel);
 		
+	}
+	
+	private void createResearchTable(JScrollPane panel) throws Exception {
+		
+		String[] columnNames = {"ID", "NOM", "PRENOM", "EMAIL", "FILIERE", "TEL", "VILLE"};
+		
+		DefaultTableModel tableModel = new DefaultTableModel(databaseDb.readDb(""), columnNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
+		JTable table = new JTable(databaseDb.readDb(""), columnNames);
+		table.setModel(tableModel);
+		panel.setViewportView(table);
 	}
 	
 	private void createRegistrationPanel() {
